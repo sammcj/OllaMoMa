@@ -322,13 +322,9 @@ onBeforeUnmount(() => {
 
 <template>
 	<div class="h-screen px-2 overflow-y-hidden bg-background">
-		<div class="flex max-w-lg gap-1 pt-2 mx-auto md:max-w-xl">
+		<div class="flex w-full gap-1 pt-2 mx-auto md:max-w-4xl">
 			<div class="w-full">
-				<Input
-					name="filterModel"
-					class="focus-visible:outline-none"
-					v-model="filterModel"
-					:placeholder="`Search ${modelList.length} models...`" />
+				<Input name="filterModel" class="focus-visible:outline-none" v-model="filterModel" :placeholder="`Search ${modelList.length} models...`" />
 			</div>
 
 			<Popover>
@@ -337,11 +333,8 @@ onBeforeUnmount(() => {
 						<Tooltip>
 							<TooltipTrigger>
 								<Button variant="default">
-									<Icon
-										icon="radix-icons:gear"
-										class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-									<Icon
-										icon="radix-icons:gear"
+									<Icon icon="radix-icons:gear" class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+									<Icon icon="radix-icons:gear"
 										class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
 								</Button>
 							</TooltipTrigger>
@@ -353,88 +346,55 @@ onBeforeUnmount(() => {
 				</PopoverTrigger>
 				<PopoverContent class="flex flex-col gap-4">
 					<Separator label="SORT BY" />
-					<ToggleGroup
-						class="flex justify-between gap-1"
-						type="single">
-						<ToggleGroupItem
-							value="name"
-							@click="
-								sortBy = 'name';
-								sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-							">
+					<ToggleGroup class="flex justify-between gap-1" type="single">
+						<ToggleGroupItem value="name" @click="
+							sortBy = 'name'
+						sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+						">
 							NAME
 						</ToggleGroupItem>
-						<ToggleGroupItem
-							value="size"
-							@click="
-								sortBy = 'size';
-								sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-							">
+						<ToggleGroupItem value="size" @click="
+							sortBy = 'size'
+						sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+						">
 							SIZE
 						</ToggleGroupItem>
-						<ToggleGroupItem
-							value="mod"
-							@click="
-								sortBy = 'modified_at';
-								sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
-							">
+						<ToggleGroupItem value="mod" @click="
+							sortBy = 'modified_at'
+						sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+						">
 							LATEST
 						</ToggleGroupItem>
 					</ToggleGroup>
 
 					<Separator label="THEMES" />
-					<ToggleGroup
-						class="flex justify-between gap-1"
-						type="single">
-						<ToggleGroupItem
-							value="light"
-							@click="mode = 'light'">
+					<ToggleGroup class="flex justify-between gap-1" type="single">
+						<ToggleGroupItem value="light" @click="mode = 'light'">
 							LIGHT
 						</ToggleGroupItem>
-						<ToggleGroupItem
-							value="dark"
-							@click="mode = 'dark'">
+						<ToggleGroupItem value="dark" @click="mode = 'dark'">
 							DARK
 						</ToggleGroupItem>
-						<ToggleGroupItem
-							value="auto"
-							@click="mode = 'auto'">
+						<ToggleGroupItem value="auto" @click="mode = 'auto'">
 							SYSTEM
 						</ToggleGroupItem>
 					</ToggleGroup>
 
-					<Separator
-						label="BASE URL" />
-					<div
-						class="flex justify-between gap-1">
-						<Input
-							name="base-url"
-							class="focus-visible:outline-none"
-							placeholder="Enter Base URL"
-							v-model="newBaseUrl" />
+					<Separator label="BASE URL" />
+					<div class="flex justify-between gap-1">
+						<Input name="base-url" class="focus-visible:outline-none" placeholder="Enter Base URL" v-model="newBaseUrl" />
 						<Button @click="setBaseUrl()">
-							<Icon
-								icon="radix-icons:check"
-								class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-							<Icon
-								icon="radix-icons:check"
-								class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+							<Icon icon="radix-icons:check" class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+							<Icon icon="radix-icons:check" class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
 						</Button>
 					</div>
 
-					<Separator
-						v-if="ollamomaDebug === 'true'"
-						label="DEBUG" />
-					<div
-						v-if="ollamomaDebug === 'true'"
-						class="flex justify-center">
-						<Button
-							variant="destructive"
-							@click="
-								() => {
-									console.log('event triggered!');
-									toast('Event has been triggered!', {});
-								}
+					<Separator v-if="ollamomaDebug === 'true'" label="DEBUG" />
+					<div v-if="ollamomaDebug === 'true'" class="flex justify-center">
+						<Button variant="destructive" @click="() => {
+							console.log('event triggered!')
+							toast('Event has been triggered!', {})
+						}
 							">
 							TRIGGER TOAST
 						</Button>
@@ -444,24 +404,15 @@ onBeforeUnmount(() => {
 		</div>
 
 		<div class="flex flex-col h-screen gap-2 py-2 pb-20">
-			<ScrollArea
-				class="flex-none w-full max-w-lg mx-auto border rounded md:max-w-xl bg-background"
-				v-if="processList && processList.length > 0">
-				<Accordion
-					class="w-full h-full px-2"
-					type="single"
-					collapsible>
+			<ScrollArea class="flex-none w-full max-w-4xl mx-auto border rounded md:max-w-4xl bg-background" v-if="processList && processList.length > 0">
+				<Accordion class="w-full h-full px-2" type="single" collapsible>
 					<AccordionItem value="processes">
-						<AccordionTrigger
-							>{{ processList.length }}
+						<AccordionTrigger>{{ processList.length }}
 							{{ processList.length === 1 ? 'model' : 'models' }}
-							loaded</AccordionTrigger
-						>
+							loaded</AccordionTrigger>
 
 						<AccordionContent class="mb-1">
-							<div
-								v-for="(model, index) in processList"
-								:key="index">
+							<div v-for="(model, index) in processList" :key="index">
 								<Card>
 									<CardHeader>
 										<CardTitle class="text-lg">
@@ -482,21 +433,13 @@ onBeforeUnmount(() => {
 				</Accordion>
 			</ScrollArea>
 
-			<ScrollArea class="flex-auto w-full max-w-lg mx-auto border rounded md:max-w-xl bg-background">
-				<Accordion
-					class="w-full h-full pl-2 pr-4"
-					type="single"
-					collapsible>
-					<AccordionItem
-						v-for="(model, index) in sortedModelList"
-						:key="index"
-						:value="`item-${index}`">
+			<ScrollArea class="flex-auto w-full max-w-lg mx-auto border rounded md:max-w-4xl bg-background">
+				<Accordion class="w-full h-full pl-2 pr-4" type="single" collapsible>
+					<AccordionItem v-for="(model, index) in sortedModelList" :key="index" :value="`item-${index}`">
 						<AccordionTrigger @click="showModelFileContent({ model: model.name })"> {{ model.name }} </AccordionTrigger>
 
 						<AccordionContent>
-							<Tabs
-								default-value="modelinfo_tab"
-								class="w-full">
+							<Tabs default-value="modelinfo_tab" class="w-full">
 								<TabsList class="flex">
 									<TooltipProvider>
 										<Tooltip>
@@ -512,9 +455,7 @@ onBeforeUnmount(() => {
 									<TooltipProvider>
 										<Tooltip>
 											<TooltipTrigger>
-												<TabsTrigger
-													name="modelfile_tab"
-													value="modelfile_tab">
+												<TabsTrigger name="modelfile_tab" value="modelfile_tab">
 													Modelfile
 												</TabsTrigger>
 											</TooltipTrigger>
@@ -544,19 +485,12 @@ onBeforeUnmount(() => {
 												<DialogTitle>Rename Model</DialogTitle>
 												<DialogDescription> Enter a new name for {{ model.name }} </DialogDescription>
 											</DialogHeader>
-											<Input
-												name="rename-model"
-												class="focus-visible:outline-none"
-												v-model="newName"
-												:placeholder="`Enter model name...`" />
+											<Input name="rename-model" class="focus-visible:outline-none" v-model="newName" :placeholder="`Enter model name...`" />
 											<DialogFooter>
 												<DialogClose as-child>
-													<Button
-														variant="default"
-														@click="
-															() => {
-																renameModel({ source: model.name, destination: newName });
-															}
+													<Button variant="default" @click="() => {
+														renameModel({ source: model.name, destination: newName })
+													}
 														">
 														Rename
 													</Button>
@@ -583,19 +517,12 @@ onBeforeUnmount(() => {
 												<DialogTitle>Copy Model</DialogTitle>
 												<DialogDescription> Enter a new name for {{ model.name }} </DialogDescription>
 											</DialogHeader>
-											<Input
-												name="copy-model"
-												class="focus-visible:outline-none"
-												v-model="newName"
-												:placeholder="`Enter model name...`" />
+											<Input name="copy-model" class="focus-visible:outline-none" v-model="newName" :placeholder="`Enter model name...`" />
 											<DialogFooter>
 												<DialogClose as-child>
-													<Button
-														variant="default"
-														@click="
-															() => {
-																copyModel({ source: model.name, destination: newName });
-															}
+													<Button variant="default" @click="() => {
+														copyModel({ source: model.name, destination: newName })
+													}
 														">
 														Copy
 													</Button>
@@ -624,12 +551,9 @@ onBeforeUnmount(() => {
 											</DialogHeader>
 											<DialogFooter>
 												<DialogClose as-child>
-													<Button
-														variant="destructive"
-														@click="
-															() => {
-																deleteModel({ model: model.name });
-															}
+													<Button variant="destructive" @click="() => {
+														deleteModel({ model: model.name })
+													}
 														">
 														Remove
 													</Button>
@@ -659,10 +583,7 @@ onBeforeUnmount(() => {
 												{{ formatDateTime(model.modified_at) }}
 											</div>
 										</li>
-										<li
-											class="px-2 py-1 border rounded w-full text-muted-foreground"
-											v-for="(value, key) in model.details"
-											:key="key">
+										<li class="px-2 py-1 border rounded w-full text-muted-foreground" v-for="(value, key) in model.details" :key="key">
 											{{
 												`${key}`
 													.replace('_', ' ')
@@ -677,32 +598,16 @@ onBeforeUnmount(() => {
 									</ul>
 								</TabsContent>
 
-								<TabsContent
-									class="flex flex-col gap-2"
-									value="modelfile_tab">
-									<Textarea
-										name="model-file-area"
-										class="focus-visible:outline-none min-h-52"
-										placeholder="Modelfile loads here..."
+								<TabsContent class="flex flex-col gap-2" value="modelfile_tab">
+									<Textarea name="model-file-area" class="focus-visible:outline-none min-h-52" placeholder="Modelfile loads here..."
 										v-model="modelfileContent" />
 									<div class="flex justify-end gap-1">
-										<Button
-											@click="undoChanges"
-											variant="secondary"
-											>Undo</Button
-										>
-										<Button
-											class="flex justify-center"
-											:disabled="isLoading"
-											variant="destructive"
-											@click="
-												() => {
-													saveModelFileContent({ model: model.name, modelfile: modelfileContent });
-												}
+										<Button @click="undoChanges" variant="secondary">Undo</Button>
+										<Button class="flex justify-center" :disabled="isLoading" variant="destructive" @click="() => {
+											saveModelFileContent({ model: model.name, modelfile: modelfileContent })
+										}
 											">
-											<Loader2
-												v-if="isLoading"
-												class="w-4 h-4 animate-spin" />
+											<Loader2 v-if="isLoading" class="w-4 h-4 animate-spin" />
 											<span v-if="!isLoading">Save</span>
 										</Button>
 									</div>
@@ -716,17 +621,12 @@ onBeforeUnmount(() => {
 			<div class="fixed flex justify-center w-full bottom-2">
 				<p class="text-xs">
 					made with ❤️ by
-					<a
-						class="underline"
-						href="https://github.com/endo9000"
-						target="_blank">
+					<a class="underline" href="https://github.com/endo9000" target="_blank">
 						endoLlama
 					</a>
 				</p>
 			</div>
 		</div>
 	</div>
-	<Toaster
-		position="top-center"
-		richColors />
+	<Toaster position="top-center" richColors />
 </template>
